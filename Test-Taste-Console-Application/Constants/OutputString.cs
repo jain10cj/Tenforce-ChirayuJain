@@ -15,5 +15,11 @@
         public const string NoPlanetsFound = "No planets found.";
         public const string FileCreated = "The file is created in: ";
         public const string FolderCreated = "The folder is created in: ";
+
+        public const string LoadingAllPlanetsData = "Loading all planets data.............";
+        public const string WrittingAllPlanetsAndTheirMoonsData = "Writing all planets and their moons data.............";
+        public const string LoadingAllMoonsData = "Loading all moons data.............";
+        public const string WrittingAllMoonsAndTheirMassData = "Writing all moons and their mass data.............";
+        public const string WrittingAllPlanetsAndTheirAvgMoonGravityData = "Writing all planets and their average moon gravity data.............";
     }
 }
