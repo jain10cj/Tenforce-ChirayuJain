@@ -23,6 +23,7 @@ namespace Test_Taste_Console_Application.Domain.Services
         public void OutputAllPlanetsAndTheirMoonsToConsole()
         {
             //The service gets all the planets from the API.
+            Console.WriteLine(OutputString.LoadingPlanets);
             var planets = _planetService.GetAllPlanets().ToArray();
 
             //If the planets aren't found, then the function stops and tells that to the user via the console.
@@ -102,6 +103,7 @@ namespace Test_Taste_Console_Application.Domain.Services
         public void OutputAllMoonsAndTheirMassToConsole()
         {
             //The function works the same way as the PrintAllPlanetsAndTheirMoonsToConsole function. You can find more comments there.
+            Console.WriteLine(OutputString.LoadingMoons);
             var moons = _moonService.GetAllMoons().ToArray();
             
             if (!moons.Any())
@@ -146,6 +148,7 @@ namespace Test_Taste_Console_Application.Domain.Services
         public void OutputAllPlanetsAndTheirAverageMoonGravityToConsole()
         {
             //The function works the same way as the PrintAllPlanetsAndTheirMoonsToConsole function. You can find more comments there.
+            Console.WriteLine(OutputString.LoadingPlanets);
             var planets = _planetService.GetAllPlanets().ToArray();
             if (!planets.Any())
             {

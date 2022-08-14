@@ -10,15 +10,13 @@ namespace Test_Taste_Console_Application.Domain.Objects
         public string Id { get; set; }
         public float SemiMajorAxis { get; set; }
         public ICollection<Moon> Moons { get; set; }
-        public float AverageMoonGravity
-        {
-            get => 0.0f;
-        }
+        public float AverageMoonGravity { get; set; }
 
         public Planet(PlanetDto planetDto)
         {
             Id = planetDto.Id;
             SemiMajorAxis = planetDto.SemiMajorAxis;
+            AverageMoonGravity = planetDto.AverageMoonGravity;
             Moons = new Collection<Moon>();
             if(planetDto.Moons != null)
             {
