@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text;
+using System.Linq;
 using Newtonsoft.Json;
 using Test_Taste_Console_Application.Constants;
 using Test_Taste_Console_Application.Domain.DataTransferObjects;
@@ -60,14 +61,13 @@ namespace Test_Taste_Console_Application.Domain.Services
                         newMoonsCollection.Add(JsonConvert.DeserializeObject<MoonDto>(moonContent));
                     }
                     planet.Moons = newMoonsCollection;
-
+                    planet.AverageMoonGravity = planet.Moons.Average(x => x.Gravity);
                 }
                 allPlanetsWithTheirMoons.Add(new Planet(planet));
             }
 
             return allPlanetsWithTheirMoons;
         }
-
         private static string RemoveDiacritics(string text)
         {
             var normalizedString = text.Normalize(NormalizationForm.FormD);
@@ -87,5 +87,7 @@ namespace Test_Taste_Console_Application.Domain.Services
                 .ToString()
                 .Normalize(NormalizationForm.FormC);
         }
+
     }
+
 }
