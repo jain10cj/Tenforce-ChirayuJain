@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text;
@@ -24,6 +25,7 @@ namespace Test_Taste_Console_Application.Domain.Services
 
         public IEnumerable<Planet> GetAllPlanets()
         {
+            Console.WriteLine(OutputString.PlanetLoaderStart);
             var allPlanetsWithTheirMoons = new Collection<Planet>();
 
             var response = _httpClientService.Client
@@ -46,6 +48,8 @@ namespace Test_Taste_Console_Application.Domain.Services
             if (results == null) return allPlanetsWithTheirMoons;
 
             //If the planet doesn't have any moons, then it isn't added to the collection.
+
+            Console.WriteLine(OutputString.MoonLoaderStart + " for Planets");
             foreach (var planet in results.Bodies)
             {
                 if(planet.Moons != null)
@@ -63,8 +67,10 @@ namespace Test_Taste_Console_Application.Domain.Services
 
                 }
                 allPlanetsWithTheirMoons.Add(new Planet(planet));
+                
             }
-
+            Console.WriteLine(OutputString.MoonLoaderEnd + " for Planets");
+            Console.WriteLine(OutputString.PlanetLoaderEnd);
             return allPlanetsWithTheirMoons;
         }
 

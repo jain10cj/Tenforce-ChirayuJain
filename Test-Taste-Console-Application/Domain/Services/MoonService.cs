@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using Test_Taste_Console_Application.Constants;
@@ -23,6 +24,7 @@ namespace Test_Taste_Console_Application.Domain.Services
 
         public IEnumerable<Moon> GetAllMoons()
         {
+            Console.WriteLine(OutputString.MoonLoaderStart);
             var response = _httpClientService.Client
                 .GetAsync(UriPath.GetAllMoonsWithMassQueryParameters)
                 .Result;
@@ -47,7 +49,7 @@ namespace Test_Taste_Console_Application.Domain.Services
             {
                 allMoons.Add(new Moon(moonDto));
             }
-
+            Console.WriteLine(OutputString.MoonLoaderEnd);
             return allMoons;
         }
     }

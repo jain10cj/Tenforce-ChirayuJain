@@ -49,6 +49,8 @@ namespace Test_Taste_Console_Application.Domain.Services
             };
 
             //The for loop creates the correct output.
+            ConsoleWriter.CreateEmptyLines(2);
+            Console.WriteLine(OutputString.StartWriteData + "Printing Planet Details followed by their Moon Details.");
             for (int i = 0, j = 1; i < planets.Length; i++, j++)
             {
                 //First the line is created.
@@ -85,6 +87,10 @@ namespace Test_Taste_Console_Application.Domain.Services
                 //Under the data the footer is created.
                 ConsoleWriter.CreateLine(columnSizesForMoons);
                 ConsoleWriter.CreateEmptyLines(2);
+                Console.WriteLine(OutputString.EndWriteData + "Printing Planet Details followed by their Moon Details.");
+                ConsoleWriter.CreateEmptyLines(2);
+
+                
 
                 /*
                     This is an example of the output for the planet Earth:
@@ -109,13 +115,13 @@ namespace Test_Taste_Console_Application.Domain.Services
                 Console.WriteLine(OutputString.NoMoonsFound);
                 return;
             }
-
             var columnSizesForMoons = new[] { 20, 20, 30, 20 };
             var columnLabelsForMoons = new[]
             {
                 OutputString.MoonNumber, OutputString.MoonId, OutputString.MoonMassExponent, OutputString.MoonMassValue
             };
-
+            ConsoleWriter.CreateEmptyLines(2);
+            Console.WriteLine(OutputString.StartWriteData + "Moon and their masses.");
             ConsoleWriter.CreateHeader(columnLabelsForMoons, columnSizesForMoons);
 
             for (int i = 0, j = 1; i < moons.Length; i++, j++)
@@ -131,7 +137,8 @@ namespace Test_Taste_Console_Application.Domain.Services
 
             ConsoleWriter.CreateLine(columnSizesForMoons);
             ConsoleWriter.CreateEmptyLines(2);
-            
+            Console.WriteLine(OutputString.EndWriteData + "Moon and their masses.");
+            ConsoleWriter.CreateEmptyLines(2);
             /*
                 This is an example of the output for the moon around the earth:
                 --------------------+--------------------+------------------------------+--------------------
@@ -146,6 +153,7 @@ namespace Test_Taste_Console_Application.Domain.Services
         public void OutputAllPlanetsAndTheirAverageMoonGravityToConsole()
         {
             //The function works the same way as the PrintAllPlanetsAndTheirMoonsToConsole function. You can find more comments there.
+
             var planets = _planetService.GetAllPlanets().ToArray();
             if (!planets.Any())
             {
@@ -158,8 +166,8 @@ namespace Test_Taste_Console_Application.Domain.Services
             {
                 OutputString.PlanetId, OutputString.PlanetMoonAverageGravity
             };
-
-
+            ConsoleWriter.CreateEmptyLines(2);
+            Console.WriteLine(OutputString.StartWriteData + "Planets and their calculated Average Moon Gravity.");
             ConsoleWriter.CreateHeader(columnLabels, columnSizes);
 
             foreach(Planet planet in planets)
@@ -176,7 +184,8 @@ namespace Test_Taste_Console_Application.Domain.Services
 
             ConsoleWriter.CreateLine(columnSizes);
             ConsoleWriter.CreateEmptyLines(2);
-            
+            Console.WriteLine(OutputString.EndWriteData + "Planets and their calculated Average Moon Gravity.");
+            ConsoleWriter.CreateEmptyLines(2);
             /*
                 --------------------+--------------------------------------------------
                 Planet's Number     |Planet's Average Moon Gravity
