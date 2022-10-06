@@ -146,7 +146,8 @@ namespace Test_Taste_Console_Application.Domain.Services
         public void OutputAllPlanetsAndTheirAverageMoonGravityToConsole()
         {
             //The function works the same way as the PrintAllPlanetsAndTheirMoonsToConsole function. You can find more comments there.
-            var planets = _planetService.GetAllPlanets().ToArray();
+            Console.WriteLine(OutputString.LoadingData);
+            var planets = _planetService.GetAllPlanets().ToArray();           
             if (!planets.Any())
             {
                 Console.WriteLine(OutputString.NoMoonsFound);
@@ -159,7 +160,9 @@ namespace Test_Taste_Console_Application.Domain.Services
                 OutputString.PlanetId, OutputString.PlanetMoonAverageGravity
             };
 
-
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            ConsoleWriter.ClearCurrentConsoleLine();
+            Console.WriteLine(OutputString.WritingData);
             ConsoleWriter.CreateHeader(columnLabels, columnSizes);
 
             foreach(Planet planet in planets)
@@ -176,7 +179,12 @@ namespace Test_Taste_Console_Application.Domain.Services
 
             ConsoleWriter.CreateLine(columnSizes);
             ConsoleWriter.CreateEmptyLines(2);
-            
+
+            var cursorTop = Console.CursorTop;
+            Console.SetCursorPosition(0, 0);
+            ConsoleWriter.ClearCurrentConsoleLine();
+            Console.WriteLine("Output:-");
+            Console.SetCursorPosition(0, cursorTop);
             /*
                 --------------------+--------------------------------------------------
                 Planet's Number     |Planet's Average Moon Gravity
