@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Test_Taste_Console_Application.Domain.DataTransferObjects;
+using System.Linq; 
 
 namespace Test_Taste_Console_Application.Domain.Objects
 {
@@ -12,7 +13,8 @@ namespace Test_Taste_Console_Application.Domain.Objects
         public ICollection<Moon> Moons { get; set; }
         public float AverageMoonGravity
         {
-            get => 0.0f;
+            get;
+            set;
         }
 
         public Planet(PlanetDto planetDto)
@@ -26,6 +28,7 @@ namespace Test_Taste_Console_Application.Domain.Objects
                 {
                     Moons.Add(new Moon(moonDto));
                 }
+                AverageMoonGravity = Moons.Select(Moon => Moon.Gravity).Average();
             }
         }
 
