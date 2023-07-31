@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using Test_Taste_Console_Application.Constants;
@@ -15,14 +16,17 @@ namespace Test_Taste_Console_Application.Domain.Services
     {
         private readonly HttpClientService _httpClientService;
 
-
+        //This is MoonService Constructor
         public MoonService(HttpClientService httpClientService)
         {
             _httpClientService = httpClientService;
         }
 
+        //method for collection of all moons
         public IEnumerable<Moon> GetAllMoons()
         {
+            Logger.Instance.Info("Fetching Moons Data...");
+            //Here HttpClientService with data of allmoons result is received as response
             var response = _httpClientService.Client
                 .GetAsync(UriPath.GetAllMoonsWithMassQueryParameters)
                 .Result;
@@ -38,16 +42,17 @@ namespace Test_Taste_Console_Application.Domain.Services
 
             //The JSON converter uses DTO's, that can be found in the DataTransferObjects folder, to deserialize the response content.
             var allMoons = new Collection<Moon>();
+            Logger.Instance.Info("Deserializing the Data...");
             var results = JsonConvert.DeserializeObject<JsonResult<MoonDto>>(content);
 
             //The JSON converter can return a null object. 
             if (results == null) return new Collection<Moon>();
-
-            foreach(MoonDto moonDto in results.Bodies)
+            Logger.Instance.Info("Loading Collection of Moons...");
+            foreach (MoonDto moonDto in results.Bodies)
             {
                 allMoons.Add(new Moon(moonDto));
             }
-
+            Logger.Instance.Info("Writing Moons Data...");
             return allMoons;
         }
     }

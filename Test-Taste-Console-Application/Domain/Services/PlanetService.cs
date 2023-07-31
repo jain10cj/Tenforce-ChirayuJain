@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text;
@@ -17,19 +18,23 @@ namespace Test_Taste_Console_Application.Domain.Services
     {
         private readonly HttpClientService _httpClientService;
 
+        //This is PlanetService Constructor
         public PlanetService(HttpClientService httpClientService)
         {
             _httpClientService = httpClientService;
         }
 
+        //method for collection of all planets
         public IEnumerable<Planet> GetAllPlanets()
         {
+            Logger.Instance.Info("Fetching Planets Data...");
             var allPlanetsWithTheirMoons = new Collection<Planet>();
 
+            //Here HttpClientService with data of Planetswithmoons result is received as response
             var response = _httpClientService.Client
                 .GetAsync(UriPath.GetAllPlanetsWithMoonsQueryParameters)
                 .Result;
-
+            
             //If the status code isn't 200-299, then the function returns an empty collection.
             if (!response.IsSuccessStatusCode)
             {
@@ -38,13 +43,13 @@ namespace Test_Taste_Console_Application.Domain.Services
             }
 
             var content = response.Content.ReadAsStringAsync().Result;
-
+            Logger.Instance.Info("Deserializing the Data...");
             //The JSON converter uses DTO's, that can be found in the DataTransferObjects folder, to deserialize the response content.
             var results = JsonConvert.DeserializeObject<JsonResult<PlanetDto>>(content);
 
             //The JSON converter can return a null object. 
             if (results == null) return allPlanetsWithTheirMoons;
-
+            Logger.Instance.Info("Loading Collection of Planets...");
             //If the planet doesn't have any moons, then it isn't added to the collection.
             foreach (var planet in results.Bodies)
             {
@@ -64,7 +69,6 @@ namespace Test_Taste_Console_Application.Domain.Services
                 }
                 allPlanetsWithTheirMoons.Add(new Planet(planet));
             }
-
             return allPlanetsWithTheirMoons;
         }
 
