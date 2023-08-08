@@ -14,17 +14,20 @@ namespace Test_Taste_Console_Application.Domain.Services
 
         private readonly IMoonService _moonService;
 
+        //This is ScreenOutputService Constructor with PlanetService and MoonService interfaces
         public ScreenOutputService(IPlanetService planetService, IMoonService moonService)
         {
             _planetService = planetService;
             _moonService = moonService;
         }
 
+        //Method for Output of AllPlanets And Their Moons To Display on Console
         public void OutputAllPlanetsAndTheirMoonsToConsole()
         {
+            
             //The service gets all the planets from the API.
             var planets = _planetService.GetAllPlanets().ToArray();
-
+            Logger.Instance.Info("Running Output of All Planets And Their Moons To Console...");
             //If the planets aren't found, then the function stops and tells that to the user via the console.
             if (!planets.Any())
             {
@@ -36,7 +39,7 @@ namespace Test_Taste_Console_Application.Domain.Services
             var columnSizesForPlanets = new[] { 20, 20, 30, 20 };
             var columnLabelsForPlanets = new[]
             {
-                OutputString.PlanetNumber, OutputString.PlanetId, OutputString.PlanetSemiMajorAxis,
+                OutputString.PlanetId, OutputString.PlanetNumber, OutputString.PlanetSemiMajorAxis,
                 OutputString.TotalMoons
             };
 
@@ -45,7 +48,8 @@ namespace Test_Taste_Console_Application.Domain.Services
             var columnSizesForMoons = new[] { 20, 70 + 2 };
             var columnLabelsForMoons = new[]
             {
-                OutputString.MoonNumber, OutputString.MoonId
+                //Error solved for Total labels needed for data 
+                OutputString.MoonNumber, OutputString.MoonId, OutputString.PlanetSemiMajorAxis, OutputString.TotalMoons
             };
 
             //The for loop creates the correct output.
@@ -85,25 +89,54 @@ namespace Test_Taste_Console_Application.Domain.Services
                 //Under the data the footer is created.
                 ConsoleWriter.CreateLine(columnSizesForMoons);
                 ConsoleWriter.CreateEmptyLines(2);
-
+                
                 /*
-                    This is an example of the output for the planet Earth:
+                    This is an example of the output for the planet Uranus and their Moons:
+                   --------------------+--------------------+------------------------------+--------------------
+                    Planet's Id         |Planet's Number     |Planet's Semi-Major Axis      |Total Moons
+                    1                   |Uranus              |2.8706583E+09                 |27
                     --------------------+--------------------+------------------------------+--------------------
-                    Planet's Number     |Planet's Id         |Planet's Semi-Major Axis      |Total Moons
-                    10                  |Terre               |0                             |1
-                    --------------------+--------------------+------------------------------+--------------------
-                    Moon's Number       |Moon's Id
-                    1                   |La Lune
+                    1                   |Ariel
+                    2                   |Umbriel
+                    3                   |Titania
+                    4                   |Oberon
+                    5                   |Miranda
+                    6                   |Cordelia
+                    7                   |Ophelia
+                    8                   |Bianca
+                    9                   |Cressida
+                    10                  |Desdemona
+                    11                  |Juliet
+                    12                  |Portia
+                    13                  |Rosalind
+                    14                  |Belinda
+                    15                  |Puck
+                    16                  |Caliban
+                    17                  |Sycorax
+                    18                  |Prospero
+                    19                  |Setebos
+                    20                  |Stephano
+                    21                  |Trinculo
+                    22                  |Francisco
+                    23                  |Margaret
+                    24                  |Ferdinand
+                    25                  |Perdita
+                    26                  |Mab
+                    27                  |Cupid
                     --------------------+------------------------------------------------------------------------
+                    and more........
                 */
             }
+            //To read output and stop closing it automatically
+            Console.ReadKey();
         }
 
         public void OutputAllMoonsAndTheirMassToConsole()
         {
+            
             //The function works the same way as the PrintAllPlanetsAndTheirMoonsToConsole function. You can find more comments there.
             var moons = _moonService.GetAllMoons().ToArray();
-            
+            Logger.Instance.Info("Running Output of All Moons And Their Mass To Console...");
             if (!moons.Any())
             {
                 Console.WriteLine(OutputString.NoMoonsFound);
@@ -131,32 +164,36 @@ namespace Test_Taste_Console_Application.Domain.Services
 
             ConsoleWriter.CreateLine(columnSizesForMoons);
             ConsoleWriter.CreateEmptyLines(2);
-            
+
             /*
                 This is an example of the output for the moon around the earth:
-                --------------------+--------------------+------------------------------+--------------------
+               --------------------+--------------------+------------------------------+--------------------
                 Moon's Number       |Moon's Id           |Moon's Mass Exponent          |Moon's Mass Value
                 --------------------+--------------------+------------------------------+--------------------
-                1                   |Lune                |22                            |7,346             
-                ...more data...
+                1                   |Lune                |22                            |7.346
+                2                   |Mimas               |19                            |3.79
+                3                   |Encelade            |20                            |1.08
+                and more........
                 --------------------+--------------------+------------------------------+--------------------
              */
         }
 
         public void OutputAllPlanetsAndTheirAverageMoonGravityToConsole()
         {
+            
             //The function works the same way as the PrintAllPlanetsAndTheirMoonsToConsole function. You can find more comments there.
             var planets = _planetService.GetAllPlanets().ToArray();
+            Logger.Instance.Info("Running Output of All Planets And Their Average Moon Gravity To Console...");
             if (!planets.Any())
             {
                 Console.WriteLine(OutputString.NoMoonsFound);
                 return;
             }
-
             var columnSizes = new[] { 20, 30 };
             var columnLabels = new[]
             {
-                OutputString.PlanetId, OutputString.PlanetMoonAverageGravity
+                //Not PlaneNumber but PlanetName to be displayed
+                OutputString.PlanetName, OutputString.PlanetMoonAverageGravity
             };
 
 
@@ -166,7 +203,8 @@ namespace Test_Taste_Console_Application.Domain.Services
             {
                 if(planet.HasMoons())
                 {
-                    ConsoleWriter.CreateText(new string[] { $"{planet.Id}", $"{planet.AverageMoonGravity}" }, columnSizes);
+                    //To display AverageMoonGravity in format of 0.0f
+                    ConsoleWriter.CreateText(new string[] { $"{planet.Id}", $"{planet.AverageMoonGravity + "f"}" }, columnSizes);
                 }
                 else
                 {
@@ -176,13 +214,19 @@ namespace Test_Taste_Console_Application.Domain.Services
 
             ConsoleWriter.CreateLine(columnSizes);
             ConsoleWriter.CreateEmptyLines(2);
-            
             /*
-                --------------------+--------------------------------------------------
-                Planet's Number     |Planet's Average Moon Gravity
-                --------------------+--------------------------------------------------
-                1                   |0.0f
-                --------------------+--------------------------------------------------
+                --------------------+------------------------------
+                Planet's Name       |The Planet's Average Moon Gravity
+                --------------------+------------------------------
+                uranus              |8.87f
+                neptune             |11.15f
+                jupiter             |24.79f
+                mars                |3.71f
+                mercure             |-
+                saturne             |10.44f
+                terre               |9.8f
+                venus               |-
+                --------------------+------------------------------
             */
         }
     }

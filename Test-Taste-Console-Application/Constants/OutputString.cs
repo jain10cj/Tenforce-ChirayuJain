@@ -3,6 +3,8 @@
     public class OutputString
     {
         public const string PlanetNumber = "Planet's Number";
+        //To Display Planet's Name
+        public const string PlanetName = "Planet's Name";
         public const string PlanetSemiMajorAxis = "Planet's Semi-Major Axis";
         public const string PlanetId = "Planet's Id";
         public const string TotalMoons = "Total Moons";
