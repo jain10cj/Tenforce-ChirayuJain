@@ -1,0 +1,15 @@
+As alternative solution, we can create a property in the PlanetDto class for AverageMoonGravity and calculating it within the PlanetService while linking moons with planets. The AverageMoonGravity value is then linked to the Planet class through the Planet constructor.
+
+Approach summary :
+- Add an AverageMoonGravity property to the PlanetDto class.
+- Calculate the AverageMoonGravity value within the PlanetService while linking moons with planets.
+- Pass the AverageMoonGravity value to the Planet class through its constructor.
+
+Advantages :
+- By calculating AverageMoonGravity in the service layer and passing it to the Planet class through its constructor, we will have more flexibility to modify the calculation logic or introduce caching mechanisms without directly affecting the Planet class.
+- The AverageMoonGravity property is encapsulated within the PlanetDto class, which provides a clean and well-defined interface for accessing this value.
+
+Drawbacks :
+- This approach introduces additional complexity compared to the initial solution. It requires changes to both the PlanetDto class and the PlanetService, potentially making the codebase harder to understand and maintain.
+- Calculating AverageMoonGravity during the linking process in the service layer may introduce a slight performance overhead, especially if this operation is performed frequently.
+- Storing AverageMoonGravity in both the PlanetDto and Planet classes may lead to data duplication. If not properly synchronized, these values could become inconsistent.
