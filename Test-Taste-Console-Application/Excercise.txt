@@ -1,0 +1,37 @@
+Excercise 2- 
+Propose in less than 5 lines an alternative solution to this problem (if possible) and explain a 
+benefit and a drawback versus the solution that you have chosen.
+
+Solution-
+As an alternative solution we can make AverageMoonGravity property as getter setter type.
+
+Benefit of this solution we get to have the control over the return values and 
+values can be set to instance variable
+
+Drawback would be this property can be set to any value by any other object and 
+can be set outside the class.
+
+It can be written as 
+
+public float AverageMoonGravity {get;set;}
+
+and in constructor we can define the value as
+
+public Planet(PlanetDto planetDto)
+        {
+            Id = planetDto.Id;
+            SemiMajorAxis = planetDto.SemiMajorAxis;
+            Moons = new Collection<Moon>();
+            if(planetDto.Moons != null)
+            {
+                foreach (MoonDto moonDto in planetDto.Moons)
+                {
+                    Moons.Add(new Moon(moonDto));
+                }
+                AverageMoonGravity = planetDto.Moons.Average(moon => moon.MassValue);
+            }
+            else
+            {
+                AverageMoonGravity = 0.0;
+            }
+        }

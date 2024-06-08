@@ -8,5 +8,9 @@
             "The screen output operation failed with the following error: ";
 
         public const string FileOutputOperationFailed = "The file output operation failed with the following error: ";
+        public const string JsonConverionFailed = "Error while converting data to json format";
+        public const string PlanetServiceException = "PlanetServiceException";
+        public const string MoonServiceException = "MoonServiceException";
+
     }
 }
